@@ -1,0 +1,10 @@
+NAME=1
+LD=2
+ST=3
+INIT=4
+COMM=5
+EOI=6
+VALID_ARG=7
+WS=8
+','=5
+';'=6
