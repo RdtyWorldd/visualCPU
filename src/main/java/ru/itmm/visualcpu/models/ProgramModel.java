@@ -1,64 +1,76 @@
 package ru.itmm.visualcpu.models;
 
 import ru.itmm.visualcpu.controllers.IObserver;
+import ru.itmm.visualcpu.dao.BDAO;
+import ru.itmm.visualcpu.dao.CrudDAO;
 import ru.itmm.visualcpu.models.commands.Command;
 import ru.itmm.visualcpu.models.commands.Instruction;
 
 import java.util.*;
 
 public class ProgramModel implements Iterable<Command>{
-    private List<Command> commands = new ArrayList<>();
-    private Set<Integer> memoryAdresses = new HashSet<>();
+
+    private CrudDAO<Command> dao = BDAO.getDAO();
+    //private Set<Integer> memoryAdresses = new HashSet<>(); //возможно придется убрать
     private List<IObserver> observers = new ArrayList<>();
 
     public void addCommand(Command command) {
-        if(command.getInstruction() == Instruction.INIT)
-            memoryAdresses.add(command.getArgs()[0]);
-        else if(command.getInstruction() == Instruction.ST)
-            memoryAdresses.add(command.getArgs()[1]);
-        commands.add(command);
+        dao.add(command);
         eventCall();
     }
 
     public void removeCommand(int i) {
-        Command command = commands.get(i);
-        if(command.getInstruction() == Instruction.INIT)
-            memoryAdresses.remove(command.getArgs()[0]);
-        commands.remove(i);
+        Command command = dao.getAll().get(i);
+        dao.delete(command.getId());
         eventCall();
     }
 
     public void reset() {
-        commands.clear();
+        dao.deleteAll();
         eventCall();
     }
 
     public Command getCommand(int i) {
-        return commands.get(i);
+        return dao.getAll().get(i);
     }
 
     public int getCommandCount() {
-        return commands.size();
+        return dao.getAll().size();
     }
 
     public void upCommand(int commandPosition) {
-        Command current = commands.get(commandPosition);
-        Command tmp = commands.get(commandPosition - 1);
-        commands.set(commandPosition - 1, current);
-        commands.set(commandPosition, tmp);
+        Command current = dao.getAll().get(commandPosition);
+        Command tmp = dao.getAll().get(commandPosition - 1);
+        current.setId(commandPosition - 1);
+        tmp.setId(commandPosition);
+
+        dao.update(current);
+        dao.update(tmp);
         eventCall();
     }
 
     public void downCommand(int commandPosition) {
-        Command current = commands.get(commandPosition);
-        Command tmp = commands.get(commandPosition + 1);
-        commands.set(commandPosition + 1, current);
-        commands.set(commandPosition, tmp);
+        Command current = dao.getAll().get(commandPosition);
+        Command tmp = dao.getAll().get(commandPosition - 1);
+        current.setId(commandPosition + 1);
+        tmp.setId(commandPosition);
+
+        dao.update(current);
+        dao.update(tmp);
         eventCall();
     }
 
     public Set<Integer> getMemoryAdresses() {
-        return memoryAdresses;
+        Set<Integer> address = new HashSet<>();
+        dao.getAll().forEach(x -> {
+            Instruction inst = x.getInstruction();
+            if(inst == Instruction.INIT)
+                address.add(x.getArgs()[0]);
+            else if (inst == Instruction.ST) {
+                address.add(x.getArgs()[1]);
+            }
+        });
+        return address;
     }
 
     public Instruction MostPopularInstruction()
@@ -67,7 +79,7 @@ public class ProgramModel implements Iterable<Command>{
         for(Instruction inst : Instruction.values())
             map.put(inst, 0);
 
-        commands.forEach(command ->
+        dao.getAll().forEach(command ->
                 map.put(command.getInstruction(),
                         map.get(command.getInstruction()) + 1
                 )
@@ -79,15 +91,15 @@ public class ProgramModel implements Iterable<Command>{
 
     public void addObserver(IObserver observer) {
         observers.add(observer);
+        eventCall();
     }
 
     public void eventCall() {
         observers.forEach(x -> x.event(this));
-
     }
 
     @Override
     public Iterator<Command> iterator() {
-        return commands.iterator();
+        return dao.getAll().iterator();
     }
 }

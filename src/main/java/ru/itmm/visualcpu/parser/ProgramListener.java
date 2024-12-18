@@ -16,6 +16,7 @@ public class ProgramListener extends ProgramBaseListener {
     private ProgramModel program = BProgramModel.model();
     @Override
     public void enterProgram(ProgramParser.ProgramContext ctx) {
+        program.reset();
         super.enterProgram(ctx);
     }
 
