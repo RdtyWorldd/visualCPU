@@ -50,24 +50,20 @@ public class CommandController implements IObserver<ExecutorModel> {
 
     @FXML
     private void onButtonUpClick() {
-        if(commandPosition == 0)
-            return; //можно кидать исключения
+        try {
+            program.upCommand(commandPosition);
+        }catch (Exception e) {
 
-        Command tmp = program.getCommandList().get(commandPosition - 1);
-        program.getCommandList().set(commandPosition - 1, command);
-        program.getCommandList().set(commandPosition, tmp);
-        program.eventCall();
+        }
     }
 
     @FXML
     private void onButtonDownClick() {
-        if(commandPosition == program.getCommandList().size())
-            return; //можно кидать исключения
+        try {
+            program.downCommand(commandPosition);
+        }catch (Exception e) {
 
-        Command tmp = program.getCommandList().get(commandPosition + 1);
-        program.getCommandList().set(commandPosition + 1, command);
-        program.getCommandList().set(commandPosition, tmp);
-        program.eventCall();
+        }
     }
 
     @Override

@@ -27,7 +27,7 @@ public class ExecutorModel {
     }
 
     public void executeNext(ProgramModel programModel) throws RuntimeException {
-        cpu.execute(programModel.getCommandList().get(currentCommand));
+        cpu.execute(programModel.getCommand(currentCommand));
         currentCommand++;
         if(currentCommand.equals(programLength)) {
             currentCommand = 0;

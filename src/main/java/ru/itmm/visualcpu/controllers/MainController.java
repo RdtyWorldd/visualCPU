@@ -123,7 +123,7 @@ public class MainController implements IObserver<ProgramModel> {
             startButton.setDisable(true);
             nextButton.setDisable(false);
             stopButton.setDisable(false);
-            executor.setProgramLength(program.getCommandList().size());
+            executor.setProgramLength(program.getCommandCount());
             executor.eventCall();
         }
         else {

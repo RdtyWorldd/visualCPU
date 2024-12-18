@@ -33,8 +33,28 @@ public class ProgramModel implements Iterable<Command>{
         eventCall();
     }
 
-    public List<Command> getCommandList(){
-        return commands;
+    public Command getCommand(int i) {
+        return commands.get(i);
+    }
+
+    public int getCommandCount() {
+        return commands.size();
+    }
+
+    public void upCommand(int commandPosition) {
+        Command current = commands.get(commandPosition);
+        Command tmp = commands.get(commandPosition - 1);
+        commands.set(commandPosition - 1, current);
+        commands.set(commandPosition, tmp);
+        eventCall();
+    }
+
+    public void downCommand(int commandPosition) {
+        Command current = commands.get(commandPosition);
+        Command tmp = commands.get(commandPosition + 1);
+        commands.set(commandPosition + 1, current);
+        commands.set(commandPosition, tmp);
+        eventCall();
     }
 
     public Set<Integer> getMemoryAdresses() {
@@ -63,6 +83,7 @@ public class ProgramModel implements Iterable<Command>{
 
     public void eventCall() {
         observers.forEach(x -> x.event(this));
+
     }
 
     @Override
