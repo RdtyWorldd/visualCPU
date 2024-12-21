@@ -33,6 +33,8 @@ public class Command {
         this.id = id;
     }
 
+
+
     public Instruction getInstruction() {
         return instruction;
     }

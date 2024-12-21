@@ -13,7 +13,7 @@ import ru.itmm.visualcpu.models.commands.Instruction;
 import java.util.*;
 
 @Component("program")
-@Scope(ConfigurableBeanFactory.SCOPE_SINGLETON)
+@Scope("singleton")
 public class ProgramModel implements Iterable<Command>{
 
     @Autowired
@@ -55,9 +55,16 @@ public class ProgramModel implements Iterable<Command>{
 
     public void upCommand(int commandPosition) {
         Command current = dao.getAll().get(commandPosition);
+        int current_id = current.getId();
+        current = new Command(current.getInstruction(),
+                current.getArgs()[0],
+                current.getArgs()[1],
+                current_id
+        );
+
         Command tmp = dao.getAll().get(commandPosition - 1);
-        current.setId(commandPosition - 1);
-        tmp.setId(commandPosition);
+        current.setId(tmp.getId());
+        tmp.setId(current_id);
 
         dao.update(current);
         dao.update(tmp);
@@ -66,9 +73,16 @@ public class ProgramModel implements Iterable<Command>{
 
     public void downCommand(int commandPosition) {
         Command current = dao.getAll().get(commandPosition);
-        Command tmp = dao.getAll().get(commandPosition - 1);
-        current.setId(commandPosition + 1);
-        tmp.setId(commandPosition);
+        int current_id = current.getId();
+        current = new Command(current.getInstruction(),
+                current.getArgs()[0],
+                current.getArgs()[1],
+                current_id
+        );
+
+        Command tmp = dao.getAll().get(commandPosition + 1);
+        current.setId(tmp.getId());
+        tmp.setId(current_id);
 
         dao.update(current);
         dao.update(tmp);

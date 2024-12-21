@@ -8,13 +8,18 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 import ru.itmm.visualcpu.models.BProgramModel;
 import ru.itmm.visualcpu.models.ProgramModel;
 import ru.itmm.visualcpu.models.commands.Command;
 import ru.itmm.visualcpu.models.commands.Instruction;
 
+@Component("add_command_controller")
+@Scope("prototype")
 public class AddCommandController {
-    //@Autowired
+    @Autowired
     private ProgramModel program;
     private Instruction inst;
     @FXML

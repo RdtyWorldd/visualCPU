@@ -8,8 +8,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.Label?>
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="174.0" prefWidth="233.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1"
-    fx:controller="ru.itmm.visualcpu.controllers.AddCommandController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="174.0" prefWidth="233.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="174.0" prefWidth="233.0">
         <children>
             <Button layoutX="14.0" layoutY="135.0" mnemonicParsing="false" onAction="#onButtonCancelClick" prefHeight="26.0" prefWidth="70.0" text="Cancel" />

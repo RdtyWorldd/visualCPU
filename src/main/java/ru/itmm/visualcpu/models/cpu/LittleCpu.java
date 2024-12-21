@@ -10,7 +10,7 @@ import ru.itmm.visualcpu.models.memory.BMemory;
 import ru.itmm.visualcpu.models.memory.Memory;
 
 @Component("cpu")
-@Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
+@Scope("prototype")
 public class LittleCpu implements Icpu {
     private Memory memory;
 

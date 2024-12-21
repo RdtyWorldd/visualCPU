@@ -1,6 +1,9 @@
 package ru.itmm.visualcpu.parser;
 
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 import ru.itmm.atlr4.ProgramBaseListener;
 import ru.itmm.atlr4.ProgramParser;
 import ru.itmm.visualcpu.models.BProgramModel;
@@ -12,8 +15,11 @@ import ru.itmm.visualcpu.models.commands.Instruction;
 import java.util.ArrayList;
 import java.util.List;
 
+@Component("program_listener")
+@Scope("prototype")
 public class ProgramListener extends ProgramBaseListener {
-    private ProgramModel program = BProgramModel.model();
+    @Autowired
+    private ProgramModel program;
     @Override
     public void enterProgram(ProgramParser.ProgramContext ctx) {
         program.reset();

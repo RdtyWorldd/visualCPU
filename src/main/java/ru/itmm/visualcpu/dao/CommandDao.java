@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Properties;
 
@@ -82,7 +83,7 @@ public class CommandDao implements CrudDAO<Command> {
             //SQL
             PreparedStatement pst = connection.prepareStatement(
                     "DELETE FROM AllCommand * WHERE id = ?");
-            pst.setInt(0, id);
+            pst.setInt(1, id);
             pst.executeUpdate();
             updateList();
         } catch (SQLException e) {
@@ -146,6 +147,9 @@ public class CommandDao implements CrudDAO<Command> {
                         r.getInt("id")
                 ));
             }
+            Collections.sort(commads, (o2, o1) -> {
+                return o2.getId() - o1.getId();
+            });
         }catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }

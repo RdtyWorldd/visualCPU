@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 @Component("memory")
-@Scope(ConfigurableBeanFactory.SCOPE_SINGLETON)
+@Scope("singleton")
 public class Memory {
     int[] registers;
     int[] memory;

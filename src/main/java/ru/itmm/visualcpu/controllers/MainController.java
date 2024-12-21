@@ -10,7 +10,14 @@ import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 import ru.itmm.visualcpu.App;
+import ru.itmm.visualcpu.SpringAppContext;
 import ru.itmm.visualcpu.models.BExecutorModel;
 import ru.itmm.visualcpu.models.BProgramModel;
 import ru.itmm.visualcpu.models.ExecutorModel;
@@ -21,12 +28,14 @@ import ru.itmm.visualcpu.parser.ProgramTextParser;
 import java.io.File;
 import java.io.IOException;
 
-
+@Component("main_controller")
+@Scope("singleton")
 public class MainController implements IObserver<ProgramModel> {
-    //@Autowired
+    @Autowired
     private ExecutorModel executor;
-    //@Autowired
+    @Autowired
     private ProgramModel program;
+
     @FXML
     private GridPane programPanel;
     @FXML
@@ -53,11 +62,14 @@ public class MainController implements IObserver<ProgramModel> {
         program.addObserver(this);
         nextButton.setDisable(false);
         stopButton.setDisable(false);
+        try {
         FXMLLoader fxmlLoader = new FXMLLoader(
                 App.class.getResource("memory-view.fxml"));
+        fxmlLoader.setController(App.getContext().getBean("memory_controller"));
+
         FXMLLoader fxmlLoader1 = new FXMLLoader(
                 App.class.getResource("register-view.fxml"));
-        try {
+        fxmlLoader1.setController(App.getContext().getBean("register_controller"));
             Pane pane = fxmlLoader.load();
             rightPane.addRow(1, pane);
             Pane pane1 = fxmlLoader1.load();
@@ -84,7 +96,7 @@ public class MainController implements IObserver<ProgramModel> {
         if(file == null)
             return;
 
-        ProgramTextParser parser = new ProgramTextParser();
+        ProgramTextParser parser = (ProgramTextParser) App.getContext().getBean("program_parser");
         try {
             parser.parseProgram(file);
             program.eventCall();
@@ -96,10 +108,11 @@ public class MainController implements IObserver<ProgramModel> {
 
     @FXML
     private void onButtonAddClick() {
-        FXMLLoader fxmlLoader = new FXMLLoader(
-                App.class.getResource("addCommand-view.fxml"));
-
         try {
+            FXMLLoader fxmlLoader = new FXMLLoader(
+                App.class.getResource("addCommand-view.fxml"));
+            fxmlLoader.setController(App.getContext().getBean("add_command_controller"));
+
             Pane dialogPane;
             dialogPane = fxmlLoader.load();
             Scene scene = new Scene(dialogPane);
@@ -171,10 +184,10 @@ public class MainController implements IObserver<ProgramModel> {
         programPanel.getChildren().clear();
         int i = 0;
         for(Command c : model) {
-            CommandController cm = new CommandController(c, i);
+            //CommandController cm = new CommandController(c, i);
             FXMLLoader fxmlLoader = new FXMLLoader(
                     App.class.getResource("command-view.fxml"));
-            fxmlLoader.setController(cm);
+            fxmlLoader.setController(App.getContext().getBean("command_controller", c, i));
             try {
                 Pane pane = fxmlLoader.load();
                 programPanel.addColumn(0, pane);

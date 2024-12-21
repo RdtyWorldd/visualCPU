@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component("executor")
-@Scope(ConfigurableBeanFactory.SCOPE_SINGLETON)
+@Scope("singleton")
 public class ExecutorModel {
     private Icpu cpu;
 

@@ -5,6 +5,10 @@ import javafx.scene.control.Label;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.config.BeanDefinition;
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 import ru.itmm.visualcpu.models.BExecutorModel;
 import ru.itmm.visualcpu.models.BProgramModel;
 import ru.itmm.visualcpu.models.ExecutorModel;
@@ -12,10 +16,12 @@ import ru.itmm.visualcpu.models.ProgramModel;
 import ru.itmm.visualcpu.models.commands.Command;
 import ru.itmm.visualcpu.models.commands.Instruction;
 
+@Component("command_controller")
+@Scope("prototype")
 public class CommandController implements IObserver<ExecutorModel> {
-    //@Autowired
+    @Autowired
     private ExecutorModel executor;
-    //@Autowired
+    @Autowired
     private ProgramModel program;
 
     private int commandPosition;

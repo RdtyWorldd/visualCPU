@@ -12,8 +12,9 @@ module ru.itmm.visualcpu {
 
 
     opens ru.itmm.visualcpu to javafx.fxml, org.postgresql.jdbc;
-    opens ru.itmm.visualcpu.controllers to javafx.fxml;
+    opens ru.itmm.visualcpu.controllers;
     opens ru.itmm.visualcpu.models;
+    opens ru.itmm.visualcpu.parser;
 
     exports ru.itmm.visualcpu;
 
@@ -24,5 +25,6 @@ module ru.itmm.visualcpu {
     exports ru.itmm.visualcpu.models.cpu;
 
     exports ru.itmm.visualcpu.dao;
+    exports ru.itmm.visualcpu.parser;
 
 }
