@@ -1,9 +1,19 @@
 package ru.itmm.visualcpu.models.commands;
 
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
+
+//@Component("command")
+//@Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 public class Command {
     private int id = -1;
     private Instruction instruction;
     private int[] args;
+
+    public Command() {
+
+    }
 
     public Command(Instruction inst, int adr1, int adr2) {
         instruction = inst;

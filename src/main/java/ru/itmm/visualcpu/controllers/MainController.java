@@ -9,6 +9,7 @@ import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import org.springframework.beans.factory.annotation.Autowired;
 import ru.itmm.visualcpu.App;
 import ru.itmm.visualcpu.models.BExecutorModel;
 import ru.itmm.visualcpu.models.BProgramModel;
@@ -20,9 +21,12 @@ import ru.itmm.visualcpu.parser.ProgramTextParser;
 import java.io.File;
 import java.io.IOException;
 
+
 public class MainController implements IObserver<ProgramModel> {
-    private ExecutorModel executor = BExecutorModel.model();
-    private ProgramModel program = BProgramModel.model();
+    //@Autowired
+    private ExecutorModel executor;
+    //@Autowired
+    private ProgramModel program;
     @FXML
     private GridPane programPanel;
     @FXML

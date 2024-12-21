@@ -7,13 +7,15 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import org.springframework.beans.factory.annotation.Autowired;
 import ru.itmm.visualcpu.models.BProgramModel;
 import ru.itmm.visualcpu.models.ProgramModel;
 import ru.itmm.visualcpu.models.commands.Command;
 import ru.itmm.visualcpu.models.commands.Instruction;
 
 public class AddCommandController {
-    private ProgramModel program = BProgramModel.model();
+    //@Autowired
+    private ProgramModel program;
     private Instruction inst;
     @FXML
     ComboBox<Instruction> commandsBox;

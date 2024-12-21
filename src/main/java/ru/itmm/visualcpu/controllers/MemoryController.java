@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import org.springframework.beans.factory.annotation.Autowired;
 import ru.itmm.visualcpu.models.ExecutorModel;
 import ru.itmm.visualcpu.models.BExecutorModel;
 import ru.itmm.visualcpu.models.BProgramModel;
@@ -13,10 +14,13 @@ import ru.itmm.visualcpu.models.memory.Memory;
 
 import java.util.Set;
 
+
 public class MemoryController implements IObserver<ExecutorModel>{
     Memory memory = BMemory.memory();
-    ProgramModel program = BProgramModel.model();
-    ExecutorModel executor = BExecutorModel.model();
+    //@Autowired
+    ProgramModel program;
+    //@Autowired
+    ExecutorModel executor;
 
     @FXML
     GridPane addPane;

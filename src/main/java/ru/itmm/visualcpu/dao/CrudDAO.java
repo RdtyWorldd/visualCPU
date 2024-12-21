@@ -2,6 +2,7 @@ package ru.itmm.visualcpu.dao;
 
 import java.util.List;
 
+
 public interface CrudDAO<T> {
     void add(T t);
     void delete(T t);

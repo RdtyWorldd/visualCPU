@@ -1,5 +1,9 @@
 package ru.itmm.visualcpu.models;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 import ru.itmm.visualcpu.controllers.IObserver;
 import ru.itmm.visualcpu.dao.BDAO;
 import ru.itmm.visualcpu.dao.CrudDAO;
@@ -8,11 +12,22 @@ import ru.itmm.visualcpu.models.commands.Instruction;
 
 import java.util.*;
 
+@Component("program")
+@Scope(ConfigurableBeanFactory.SCOPE_SINGLETON)
 public class ProgramModel implements Iterable<Command>{
 
-    private CrudDAO<Command> dao = BDAO.getDAO();
+    @Autowired
+    private CrudDAO<Command> dao;
     //private Set<Integer> memoryAdresses = new HashSet<>(); //возможно придется убрать
     private List<IObserver> observers = new ArrayList<>();
+
+    public ProgramModel() {
+
+    }
+//    @Autowired
+//    public ProgramModel(CrudDAO<Command> dao) {
+//        this.dao = dao;
+//    }
 
     public void addCommand(Command command) {
         dao.add(command);

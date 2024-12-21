@@ -3,6 +3,7 @@ package ru.itmm.visualcpu.controllers;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
+import org.springframework.beans.factory.annotation.Autowired;
 import ru.itmm.visualcpu.models.BExecutorModel;
 import ru.itmm.visualcpu.models.ExecutorModel;
 import ru.itmm.visualcpu.models.memory.BMemory;
@@ -11,7 +12,8 @@ import ru.itmm.visualcpu.models.memory.Memory;
 public class RegisterController implements IObserver<ExecutorModel> {
 
     private Memory memory = BMemory.memory();
-    private ExecutorModel executor = BExecutorModel.model();
+    //@Autowired
+    private ExecutorModel executor;
     @FXML
     private GridPane registerPane;
 

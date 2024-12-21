@@ -1,5 +1,9 @@
 package ru.itmm.visualcpu.models;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 import ru.itmm.visualcpu.controllers.IObserver;
 import ru.itmm.visualcpu.models.commands.Command;
 import ru.itmm.visualcpu.models.cpu.Icpu;
@@ -8,13 +12,17 @@ import ru.itmm.visualcpu.models.memory.Memory;
 import java.util.ArrayList;
 import java.util.List;
 
+@Component("executor")
+@Scope(ConfigurableBeanFactory.SCOPE_SINGLETON)
 public class ExecutorModel {
     private Icpu cpu;
+
     private List<IObserver> observers = new ArrayList<>();
     private boolean isDebug = false;
     private Integer currentCommand = 0;
     private Integer programLength = 0;
 
+    @Autowired
     public ExecutorModel(Icpu cpu) {
         this.cpu = cpu;
     }

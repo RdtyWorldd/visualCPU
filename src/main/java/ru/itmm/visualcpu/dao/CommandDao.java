@@ -1,5 +1,8 @@
 package ru.itmm.visualcpu.dao;
 
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 import ru.itmm.visualcpu.models.commands.Command;
 import ru.itmm.visualcpu.models.commands.Instruction;
 
@@ -12,9 +15,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+@Component("command_dao")
+@Scope(ConfigurableBeanFactory.SCOPE_SINGLETON)
 public class CommandDao implements CrudDAO<Command> {
 
-    private Connection connection;
+    private Connection connection=null;
     private List<Command> commads = new ArrayList<>();
 
     public CommandDao() {

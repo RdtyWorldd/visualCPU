@@ -1,12 +1,23 @@
 package ru.itmm.visualcpu.models.cpu;
 
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 import ru.itmm.visualcpu.models.commands.Command;
 import ru.itmm.visualcpu.models.memory.BMemory;
 import ru.itmm.visualcpu.models.memory.Memory;
 
+@Component("cpu")
+@Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 public class LittleCpu implements Icpu {
-    private Memory memory = BMemory.memory();
+    private Memory memory;
+
+    @Autowired
+    public LittleCpu(Memory memory) {
+        this.memory = memory;
+    }
 
     private void ld(int register, int mem_id) {
         memory.getRegisters()[register] = memory.getMemory()[mem_id];
